@@ -10,6 +10,10 @@ var app = express();
 var cors = require('cors');
 app.use(cors({optionSuccessStatus: 200}));  // some legacy browsers choke on 204
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
@@ -24,6 +28,20 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+
+var api = '/api/whoami';
+app.get(api,function (req,res,next){
+  //  console.log(100);
+  let language = req.header('Accept-language')   //req.acceptsLanguages();
+  let software = req.get('User-Agent');
+  let ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress; //req.header('ipaddress'); req.ip
+
+   res.json({
+     'ipaddress' : ipaddress,
+     'languages' : language,
+     "software" : software
+   })
+})
 
 
 // listen for requests :)

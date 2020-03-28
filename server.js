@@ -38,7 +38,7 @@ app.get(api,function (req,res,next){
 
    res.json({
      'ipaddress' : ipaddress,
-     'languages' : language,
+     'language' : language,
      "software" : software
    })
 })
